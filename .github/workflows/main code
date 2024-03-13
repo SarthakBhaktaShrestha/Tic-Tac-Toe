@@ -1,0 +1,32 @@
+while (1) {
+    system("clear"); 
+    display_board(); 
+
+     $valid_move = 0;
+    while (!$valid_move) {
+        print "Player $current_player, enter your move (1-9): ";
+         $move = <STDIN>;
+
+        if ($move =~ /^[1-9]$/ && $board[$move - 1] eq ' ') {
+            $board[$move - 1] = $current_player;
+            $valid_move = 1;
+        } else {
+            print "Invalid move. Please try again.\n";
+        }
+    }
+
+    if (check_winner()) {
+        system("clear");
+        display_board();
+        print "Player $current_player wins!\n";
+        last; 
+    } elsif (is_board_full()) {
+        system("clear");
+        display_board();
+        print "It's a tie!\n";
+        last; 
+    }
+
+    $current_player = ($current_player eq 'X') ? 'O' : 'X';
+}
+
